@@ -7,7 +7,7 @@ import { browserHistory } from 'react-router'
 import { routerMiddleware, push } from 'react-router-redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
-import rootReducer from '../reducers/index'
+import rootReducer from '../reducers/reducers'
 
 export default function configureStore(preloadedState) {
     const redirectMiddleware = routerMiddleware(browserHistory);

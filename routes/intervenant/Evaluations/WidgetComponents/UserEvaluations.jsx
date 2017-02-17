@@ -1,6 +1,6 @@
 import React from 'react'
 import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
-import { getGroupUsers } from '../../../../services/GroupService.js'
+import GroupService from '../../../../services/GroupService.js'
 
 class UserEvaluations extends React.Component {
 
@@ -32,7 +32,7 @@ class UserEvaluations extends React.Component {
     // - get users from services
     getUsers(groupID){
         let that = this;
-        let req = getGroupUsers(groupID, (result) => {
+        let req = GroupService.getUsers(groupID, (result) => {
             that.setState({
                 users:result
             })

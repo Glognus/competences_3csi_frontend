@@ -4,7 +4,7 @@ import Login from '../../components/login/Login.jsx'
 
 const mapStateToProps = (state) => {
     return {
-        session: state.login
+        session: state.session
     }
 };
 

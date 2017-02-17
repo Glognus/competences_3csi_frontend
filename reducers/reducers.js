@@ -6,6 +6,7 @@ import {LOGIN_REQUEST, LOGIN_FAILURE, LOGIN_SUCCESS} from '../actions/actions'
 
 //
 function login(state = {session:{}}, action) {
+    console.log("Login reducer");
     switch(action.type) {
         case LOGIN_REQUEST:
             return Object.assign({}, state, {

@@ -6,7 +6,7 @@ var SERVER_OAUTH_URL = config.server_oauth_url;
 /**
  *
  */
-export function login(nom, mdp, callback) {
+function login(nom, mdp, callback) {
 
     var ajaxCall = $.ajax({
         type: "POST",
@@ -36,13 +36,13 @@ export function login(nom, mdp, callback) {
 /**
  *
  */
-export function logout() {
+function logout() {
     delete localStorage.tok
 }
 /**
  *
  */
-export function retrieveTokenFromServer(callback) {
+function retrieveTokenFromServer(callback) {
     $.ajax({
         type: "GET",
         url: SERVER_OAUTH_URL,
@@ -87,4 +87,15 @@ function getToken() {
  */
 function loggedIn() {
     return !!getToken();
+}
+
+module.exports = {
+    login: login,
+    logout: logout,
+    retrieveTokenFromServer: retrieveTokenFromServer,
+    getUserInfo:getUserInfo,
+    getToken: getToken,
+    loggedIn: loggedIn,
+    onChange() {
+    }
 }

@@ -1,34 +1,31 @@
 import Config from '../configuration.js';
 import Auth from '../routes/auth/Auth.jsx';
-import { getUserToken } from '../services/AuthService'
-
-import request from 'superagent'
 
 /**
  * Builds the final URL to the resource
  * @param id
  * @returns {string}
  */
-export function getFinalURL(id, suffixe){
+function getFinalURL(id, suffixe){
     var url = Config.server_base_url + "group/";
     if(id)
         url = url + id;
     if(suffixe)
         url = url + "/" + suffixe;
-    return url + "?access_token=" + getUserToken();
+    return url + "?access_token=" + Auth.getToken();
 }
 
 /**
  * Returns all groups from server
  * @param callback
  */
-export function getAllGroupsAPI(callback){
-    return request
-        .get(getFinalURL())
-        .set('Accept', 'application/json')
-        .end(function(err, res){
-            callback(err, res);
-        });
+function getAllGroups(callback){
+    return $.get(
+        getFinalURL(),
+        function (result) {
+            callback(result);
+        }
+    );
 }
 
 /**
@@ -36,13 +33,13 @@ export function getAllGroupsAPI(callback){
  * @param id
  * @param callback
  */
-export function getGroupUsersAPI(id, callback){
-    return request
-        .get(getFinalURL(id, "users"))
-        .set('Accept', 'application/json')
-        .end(function(err, res){
-            callback(err, res);
-        });
+function getGroupUsers(id, callback){
+    return $.get(
+        getFinalURL(id, "users"),
+        function (result) {
+            callback(result);
+        }
+    );
 }
 
 /**
@@ -50,7 +47,7 @@ export function getGroupUsersAPI(id, callback){
  * @param id
  * @param callback
  */
-export function getGroupMatieresAPI(id, callback){
+function getGroupMatieres(id, callback){
     return $.get(
         getFinalURL(id, "matieres"),
         function (result) {
@@ -64,7 +61,7 @@ export function getGroupMatieresAPI(id, callback){
  * @param id
  * @param callback
  */
-export function getGroupExamensAPI(id, callback){
+function getGroupExamens(id, callback){
    return $.get(
         getFinalURL(id, "examens"),
         function (result) {
@@ -78,7 +75,7 @@ export function getGroupExamensAPI(id, callback){
  * @param id
  * @param callback
  */
-export function getGroupAPI(id, callback){
+function getGroup(id, callback){
     return $.get(
         getFinalURL(id),
         function (result) {
@@ -92,7 +89,7 @@ export function getGroupAPI(id, callback){
  * @param data
  * @param callback
  */
-export function postGroupAPI(data, callback){
+function postGroup(data, callback){
     return $.ajax({
         type: "POST",
         url: getFinalURL(),
@@ -113,7 +110,7 @@ export function postGroupAPI(data, callback){
  * @param data
  * @param callback
  */
-export function putGroupAPI(id, data, callback){
+function putGroup(id, data, callback){
     return $.ajax({
         type: "PUT",
         url: getFinalURL(id),
@@ -131,6 +128,17 @@ export function putGroupAPI(id, data, callback){
 /**
  * Removes a specific group from the server
  */
-export function deleteGroup(){
+function deleteGroup(){
 
 }
+
+module.exports = {
+    getAll: getAllGroups,
+    getUsers: getGroupUsers,
+    getMatieres: getGroupMatieres,
+    getExamens: getGroupExamens,
+    get: getGroup,
+    post: postGroup,
+    put: putGroup,
+    delete: deleteGroup
+};

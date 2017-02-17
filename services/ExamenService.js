@@ -1,6 +1,5 @@
-import Config from '../configuration.js'
-import Auth from '../routes/auth/Auth.jsx'
-import { getUserToken } from '../services/AuthService'
+import Config from '../configuration.js';
+import Auth from '../routes/auth/Auth.jsx';
 
 /**
  * Builds the final URL to the resource
@@ -13,34 +12,27 @@ function getFinalURL(id, suffixe){
         url = url + id;
     if(suffixe)
         url = url + "/" + suffixe;
-    return url + "?access_token=" + getUserToken();
+    return url + "?access_token=" + Auth.getToken();
 }
 
 /**
  * Returns all examens from server
  * @param callback
  */
-export function getAllExamenAPI(callback){
-    return request
-        .get(getFinalURL())
-        .set('Accept', 'application/json')
-        .end(function(err, res){
-            callback(err, res);
-        });
-
-    /*$.get(
+function getAllExamen(callback){
+    $.get(
         getFinalURL(),
         function (result) {
             callback(result);
         }
-    );*/
+    );
 }
 
 /**
  * Returns a specific examen by id
  * @param id
  */
-export function getExamenAPI(id){
+function getExamen(id){
     $.get(
         getFinalURL(id),
         function (result) {
@@ -54,7 +46,7 @@ export function getExamenAPI(id){
  * @param id
  * @param callback
  */
-export function getExamenCompetencesAPI(id, callback){
+function getExamenCompetences(id, callback){
     $.get(
         getFinalURL(id, "competences"),
         function (result) {
@@ -68,7 +60,7 @@ export function getExamenCompetencesAPI(id, callback){
  * @param data
  * @param callback
  */
-export function postExamenAPI(data, callback){
+function postExamen(data, callback){
     $.ajax({
         type: "POST",
         url: getFinalURL(),
@@ -89,7 +81,7 @@ export function postExamenAPI(data, callback){
  * @param data
  * @param callback
  */
-export function putExamenAPI(id, data, callback){
+function putExamen(id, data, callback){
     $.ajax({
         type: "POST",
         url: getFinalURL(id),
@@ -108,7 +100,7 @@ export function putExamenAPI(id, data, callback){
  * Deletes an examen from the server
  * @param id
  */
-export function deleteExamenAPI(id, callback){
+function deleteExamen(id, callback){
     return $.ajax({
         type: "DELETE",
         url: getFinalURL(id),
@@ -121,3 +113,12 @@ export function deleteExamenAPI(id, callback){
         dataType: "json"
     });
 }
+
+module.exports = {
+    getAll: getAllExamen,
+    getCompetences: getExamenCompetences,
+    get: getExamen,
+    post: postExamen,
+    put: putExamen,
+    delete: deleteExamen
+};

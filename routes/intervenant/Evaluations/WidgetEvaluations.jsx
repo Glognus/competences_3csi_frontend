@@ -7,7 +7,7 @@ import UserService from '../../../services/UserService.js'
 import EvaluationAutoService from '../../../services/EvaluationAutoService.js'
 import EvaluationIntervenantService from '../../../services/EvaluationIntervenantService.js'
 import EvaluationExamenService from '../../../services/EvaluationExamenService.js'
-import { getTokenAPI, getUserInfo } from '../../../services/AuthService'
+import Auth from '../../auth/Auth.jsx'
 
 class WidgetEvaluations extends React.Component {
 
